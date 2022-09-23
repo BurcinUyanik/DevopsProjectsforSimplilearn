@@ -1,6 +1,6 @@
 node {
 	
-    def application = "devopsdockerexample"
+    def application = "devopsexample"
     
     //Its mandatory to change the Docker Hub Account ID after this Repo is forked by an other person
     def dockerhubaccountid = "burcinuyanik"
@@ -44,7 +44,6 @@ node {
    stage('Remove running container with old code'){
 	   //remove the container which is already running, when running 1st time named container will not be available so we are usign 'True'
 	   //added -a option to remove stopped container also
-	  sh "docker rm -f \$(docker ps -a -f name=devopsdockerexample -q) || true"
           sh "docker rm -f \$(docker ps -a -f name=devopsexample -q) || true"   
 	       
     }
@@ -53,8 +52,6 @@ node {
 	        
 	    //start container with the remote image
 	  sh "docker run --name devopsexample  -d -p 2222:2222 ${dockerhubaccountid}/${application}:${env.BUILD_NUMBER}"
-          sh "docker run --name devopdockerexample -d -p 4000:4000 ${dockerhubaccountid}/${application}:${env.BUILD_NUMBER}"  
-	  
     }
 	
     stage('Remove old images') {
